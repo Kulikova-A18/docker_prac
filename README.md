@@ -64,4 +64,12 @@ timestamp,source,event_type,details,classification
 - Появляются ли подключения к нестандартным адресам?
 - Выполняются ли команды в обход обычного приложения?
 
+## Развертка
+
+1. Установить [docker](https://docs.docker.com/engine/install/ubuntu/). Установить git, если не установлен.
+2. `git clone https://github.com/frizzymonsta/docker_prac && cd docker_prac`
+3. `docker compose up -d`
+
+При `docker ps` будут поднятые контейнеры.
+
 Отправлять на `zelichenok@comsec.spb.ru`.
