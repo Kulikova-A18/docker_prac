@@ -3,6 +3,7 @@ import threading
 import os
 import time
 import sys
+from datetime import datetime
 
 def check_utilities():
     utilities = ['docker', 'tcpdump', 'bpftrace']
@@ -33,17 +34,34 @@ def get_container_ids():
 
 def capture_traffic():
     try:
-        os.system('sudo tcpdump -i any -w network_traffic.pcap &')
+        subprocess.Popen(['sudo', 'tcpdump', '-i', 'any', '-w', 'network_traffic.pcap'])
     except Exception as e:
         print(f"Ошибка при запуске tcpdump: {e}")
-
 
 def get_logs(container_id):
     try:
         with open('activity_log.csv', 'a') as csv_file:
-            subprocess.run(['docker', 'logs', '-f', container_id], stdout=csv_file, check=True)
+            # Запись заголовка, если файл пустой
+            if os.path.exists('activity_log.csv') and os.stat('activity_log.csv').st_size == 0:
+                csv_file.write("timestamp,source,event_type,details,classification\n")
+
+            # Получаем логи контейнера
+            result = subprocess.run(['docker', 'logs', container_id], stdout=subprocess.PIPE, check=True)
+            logs = result.stdout.decode('utf-8').strip().split('\n')
+
+            for log in logs:
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                source = 'client' if container_id.startswith('client') else 'server'
+                event_type = 'syscall'
+                details = log
+                classification = '1'
+
+                csv_file.write(f"{timestamp},{source},{event_type},{details},{classification}\n")
+
     except subprocess.CalledProcessError as e:
         print(f"Ошибка при получении логов из контейнера {container_id}: {e}")
+    except Exception as e:
+        print(f"Ошибка при записи в файл логов: {e}")
 
 def loading_indicator(duration):
     end_time = time.time() + duration
@@ -78,8 +96,6 @@ def main():
 
     os.system('sudo killall tcpdump')
     os.system('sudo killall bpftrace')
-
-    print("\nСбор данных завершен. Результаты сохранены в activity_log.csv.")
 
 if __name__ == "__main__":
     main()
