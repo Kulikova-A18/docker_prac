@@ -86,7 +86,7 @@ version: '3.8'
 
 activity_log.csv: https://github.com/Kulikova-A18/docker_prac/blob/main/activity_log.csv
 
-![image](https://github.com/user-attachments/assets/f017dbde-a392-4d02-94f9-fdb23fe6eeb8)
+![image](https://github.com/user-attachments/assets/ee330aa4-0007-46f2-9e06-1de2f08ad036)
 
 network_traffic.pcap: https://github.com/Kulikova-A18/docker_prac/blob/main/network_traffic.pcap
 
@@ -383,6 +383,6 @@ vboxuser@xubu:~/docker_prac$ sudo docker inspect tomcat:9.0
 
 Скриншоты, что записалось
 
-![image](https://github.com/user-attachments/assets/adf8d211-8f53-47a6-a2bf-45ecb265f7d9)
+![image](https://github.com/user-attachments/assets/ccff5151-5cc3-4ce1-a2e7-617118b35d9d)
 
-![image](https://github.com/user-attachments/assets/f8341326-ff26-427f-a0b3-b3c10a301d6d)
+![image](https://github.com/user-attachments/assets/63e656c0-a2ef-4a98-a042-1a35c3736bff)
